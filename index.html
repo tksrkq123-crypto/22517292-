@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f8f4ec" />
+  <title>나만의 카페 경영 시뮬레이션</title>
+  <style>
+    :root{color-scheme:light;--bg:#f8f5ef;--paper:#fff;--ink:#322c26;--muted:#756b60;--coffee:#956846;--coffee-dark:#6f492f;--mint:#4b927d;--line:#e9e1d7;--cream:#f4eadc;--shadow:0 12px 32px rgba(71,50,31,.075)}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#efe5d5 0,transparent 36%),var(--bg);font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;color:var(--ink);line-height:1.5}main{max-width:1100px;padding:40px 22px 56px;margin:auto}
+    .hero{padding:6px 0 28px}.eyebrow{display:inline-block;color:var(--coffee-dark);background:#e9dbc9;border-radius:50px;padding:7px 13px;font-size:13px;font-weight:800;letter-spacing:.04em}h1{font-size:clamp(28px,4.7vw,43px);line-height:1.22;letter-spacing:-.045em;margin:15px 0 10px}.hero p{margin:0;color:var(--muted);font-size:16px}.layout{display:grid;grid-template-columns:minmax(290px,.85fr) minmax(0,1.15fr);gap:22px;align-items:start}.panel{background:var(--paper);border:1px solid var(--line);border-radius:23px;padding:27px;box-shadow:var(--shadow)}h2{font-size:21px;letter-spacing:-.03em;margin:0 0 7px}.desc{font-size:14px;color:var(--muted);margin:0 0 26px}.field{margin-bottom:23px}.field label{display:block;font-weight:750;margin-bottom:9px;font-size:15px}.field .unit-input{position:relative}.field input{width:100%;height:56px;border-radius:13px;border:1.5px solid #d9cfc2;background:#fdfbf8;padding:0 51px 0 15px;font-size:19px;font-weight:700;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s;font-variant-numeric:tabular-nums}.field input:focus{border-color:var(--coffee);box-shadow:0 0 0 4px #9568461e}.field input[aria-invalid="true"]{border-color:#bd523d;background:#fff8f5}.suffix{position:absolute;right:17px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700}.error{min-height:17px;margin:6px 0 0;font-size:12px;color:#b44933}.reset{width:100%;min-height:52px;background:var(--cream);border:1px solid #e4d2bd;border-radius:13px;font-size:15px;font-weight:800;color:var(--coffee-dark);cursor:pointer;transition:background .15s}.reset:hover{background:#ead9c1}.reset:focus-visible{outline:3px solid var(--mint);outline-offset:3px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.metric{background:#faf8f4;border:1px solid #eee7de;border-radius:16px;padding:19px 17px;min-width:0}.metric .name{font-size:14px;font-weight:700;color:var(--muted)}.metric .number{margin-top:9px;font-size:clamp(20px,2.6vw,29px);font-weight:850;letter-spacing:-.04em;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}.metric.revenue{background:#f3e8db;border-color:#ecddcb}.metric.profit{background:#e8f3ee;border-color:#d4e8df}.metric.profit .number{color:#277760}.graph-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:30px 0 18px}.graph-head h3{font-size:18px;letter-spacing:-.03em;margin:0}.legend{font-size:12px;color:var(--muted)}.chart{border:1px solid var(--line);border-radius:16px;padding:22px 17px 20px;background:#fff}.bar-row{display:grid;grid-template-columns:90px minmax(0,1fr);gap:14px;align-items:center;margin:13px 0}.bar-name{font-size:14px;font-weight:750}.track{height:39px;background:#f2eee9;border-radius:9px;overflow:hidden}.fill{height:100%;width:0;border-radius:9px;background:var(--coffee);transition:width .28s ease}.fill.profit-fill{background:var(--mint)}.bar-value{grid-column:2;text-align:right;color:var(--muted);font-size:13px;margin-top:-8px;font-variant-numeric:tabular-nums}.chart-note{color:var(--muted);font-size:12px;margin:15px 0 0}.notice{margin-top:22px;padding:17px 20px;border-radius:14px;background:#f1ede5;border:1px solid #e6dccd;color:#665d52;font-size:14px}.notice strong{color:#514436}.invalid-state{color:#b44933;font-size:13px;min-height:19px;margin-top:11px}
+    @media(max-width:760px){main{padding:25px 15px 35px}.layout{grid-template-columns:1fr;gap:16px}.panel{padding:22px 19px;border-radius:19px}.hero{padding-bottom:23px}.metric .number{font-size:clamp(20px,5.4vw,27px)}.chart{padding:16px 12px}.bar-row{grid-template-columns:69px minmax(0,1fr);gap:9px}.bar-name{font-size:12px}.field input{font-size:18px}}
+    @media(max-width:390px){.metrics{grid-template-columns:1fr}.metric{padding:15px}.metric .number{font-size:26px}}
+    @media(prefers-reduced-motion:reduce){.fill,.field input,.reset{transition:none}}
+  </style>
+</head>
+<body>
+<main>
+  <header class="hero"><span class="eyebrow">☕ CAFE BUSINESS LAB</span><h1>나만의 카페 경영 시뮬레이션</h1><p>커피 가격과 재료비, 판매량을 바꿔 나만의 하루 운영 결과를 살펴보세요.</p></header>
+  <div class="layout">
+    <section class="panel" aria-labelledby="input-title">
+      <h2 id="input-title">운영 조건 설정</h2><p class="desc">숫자를 변경하면 결과가 자동으로 계산됩니다.</p>
+      <div class="field"><label for="price">커피 한 잔 판매 가격</label><div class="unit-input"><input id="price" type="number" inputmode="numeric" min="0" step="1" value="4000" aria-describedby="price-error"><span class="suffix">원</span></div><p class="error" id="price-error" aria-live="polite"></p></div>
+      <div class="field"><label for="cost">커피 한 잔 재료비</label><div class="unit-input"><input id="cost" type="number" inputmode="numeric" min="0" step="1" value="1500" aria-describedby="cost-error"><span class="suffix">원</span></div><p class="error" id="cost-error" aria-live="polite"></p></div>
+      <div class="field"><label for="quantity">하루 예상 판매량</label><div class="unit-input"><input id="quantity" type="number" inputmode="numeric" min="0" step="1" value="50" aria-describedby="quantity-error"><span class="suffix">잔</span></div><p class="error" id="quantity-error" aria-live="polite"></p></div>
+      <button type="button" class="reset" id="reset">↺ 기본값으로 초기화</button>
+      <div id="validation-status" class="invalid-state" role="status" aria-live="polite"></div>
+    </section>
+    <section class="panel" aria-labelledby="result-title">
+      <h2 id="result-title">하루 예상 운영 결과</h2><p class="desc">입력한 조건에 따른 단순 계산 결과입니다.</p>
+      <div class="metrics" aria-live="polite" aria-atomic="true">
+        <div class="metric revenue"><div class="name">하루 예상 매출</div><div class="number" id="revenue">200,000원</div></div>
+        <div class="metric profit"><div class="name">재료비 제외 이익</div><div class="number" id="profit">125,000원</div></div>
+        <div class="metric"><div class="name">전체 재료비</div><div class="number" id="total-cost">75,000원</div></div>
+        <div class="metric"><div class="name">잔당 재료비 제외 이익</div><div class="number" id="unit-profit">2,500원</div></div>
+      </div>
+      <div class="graph-head"><h3>매출 vs. 재료비 제외 이익</h3><span class="legend">하루 기준</span></div>
+      <div class="chart" role="img" id="chart" aria-label="하루 예상 매출 200,000원, 재료비 제외 이익 125,000원 비교 막대그래프">
+        <div class="bar-row"><span class="bar-name">예상 매출</span><div class="track"><div id="revenue-bar" class="fill" style="width:100%"></div></div><div class="bar-value" id="revenue-label">200,000원</div></div>
+        <div class="bar-row"><span class="bar-name">제외 이익</span><div class="track"><div id="profit-bar" class="fill profit-fill" style="width:62.5%"></div></div><div class="bar-value" id="profit-label">125,000원</div></div>
+        <p class="chart-note">두 막대는 동일한 눈금을 사용합니다. 손실일 경우 이익 막대는 0으로 표시됩니다.</p>
+      </div>
+    </section>
+  </div>
+  <aside class="notice"><strong>안내:</strong> 이 시뮬레이션은 실제 매출을 예측하지 않습니다. 사용자가 입력한 조건만으로 계산하며, 임대료·인건비·세금·공과금 등은 반영하지 않습니다.</aside>
+</main>
+<script>
+(() => {
+  'use strict';
+  const defaults = { price: 4000, cost: 1500, quantity: 50 };
+  const inputs = Object.fromEntries(Object.keys(defaults).map(k => [k, document.getElementById(k)]));
+  const won = n => `${Math.round(n).toLocaleString('ko-KR')}원`;
+  const get = id => document.getElementById(id);
+  function validate(key) {
+    const el = inputs[key], raw = el.value.trim(), n = Number(raw);
+    let error = '';
+    if (raw === '') error = '값을 입력해 주세요.';
+    else if (!Number.isFinite(n) || n < 0 || !Number.isSafeInteger(n)) error = '0 이상의 올바른 정수를 입력해 주세요.';
+    else if (n > 1000000000) error = '10억 이하의 값을 입력해 주세요.';
+    el.setAttribute('aria-invalid', String(Boolean(error)));
+    get(`${key}-error`).textContent = error;
+    return error ? null : n;
+  }
+  function update() {
+    const price = validate('price'), cost = validate('cost'), quantity = validate('quantity');
+    const valid = price !== null && cost !== null && quantity !== null;
+    get('validation-status').textContent = valid ? '' : '올바른 값을 입력하면 계산 결과가 표시됩니다.';
+    if (!valid) {
+      for (const id of ['revenue','profit','total-cost','unit-profit','revenue-label','profit-label']) get(id).textContent = '—';
+      get('revenue-bar').style.width = '0%'; get('profit-bar').style.width = '0%';
+      get('chart').setAttribute('aria-label','입력값을 확인해 주세요.');
+      return;
+    }
+    const revenue = price * quantity, totalCost = cost * quantity, profit = revenue - totalCost, unitProfit = price - cost;
+    get('revenue').textContent = won(revenue); get('profit').textContent = won(profit);
+    get('total-cost').textContent = won(totalCost); get('unit-profit').textContent = won(unitProfit);
+    get('revenue-label').textContent = won(revenue); get('profit-label').textContent = won(profit);
+    const scale = Math.max(revenue, Math.max(0,profit), 1);
+    get('revenue-bar').style.width = `${revenue / scale * 100}%`;
+    get('profit-bar').style.width = `${Math.max(0,profit) / scale * 100}%`;
+    get('chart').setAttribute('aria-label', `하루 예상 매출 ${won(revenue)}, 재료비 제외 이익 ${won(profit)} 비교 막대그래프`);
+  }
+  Object.values(inputs).forEach(el => el.addEventListener('input', update));
+  get('reset').addEventListener('click', () => { for (const [key,value] of Object.entries(defaults)) inputs[key].value = value; update(); });
+  update();
+})();
+</script>
+</body>
+</html>
